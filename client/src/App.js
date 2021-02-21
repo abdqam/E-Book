@@ -1,6 +1,6 @@
 import './App.css';
 import Root from './components/Root';
-import Test from './components/Test';
+import Footer from './components/Footer'
 
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
@@ -28,6 +28,7 @@ function App() {
           <div><h3>{user.firstName}</h3><button onClick={logout}>LogOut</button></div> :
           <Root user={user} signedUser={signedUser} />
       }
+      <Footer/>
     </div>
   );
 }

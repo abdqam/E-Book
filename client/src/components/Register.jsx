@@ -67,12 +67,9 @@ const Register = (props) => {
             })
     };
     console.log(rawError)
-
     const classes = useStyles();
     return (
-
         <div>
-
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <div className={classes.paper} style={Shadow}>
@@ -81,7 +78,7 @@ const Register = (props) => {
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         Sign up
-    </Typography>
+                    </Typography>
                     <form className={classes.form} noValidate onSubmit={register}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>

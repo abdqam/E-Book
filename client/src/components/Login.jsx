@@ -46,7 +46,6 @@ const Shadow = {
     padding: "10%",
     boxShadow: "steelblue 0px 4px 20px 0px"
 }
-
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
