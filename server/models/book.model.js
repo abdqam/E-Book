@@ -5,7 +5,7 @@ const BookSchema = new mongoose.Schema({
         minlength:[3,'Name should be at least 3 characters'],
 },
     image: { type: String ,
-    // required:[true,"image is required"],
+    required:[true,"image is required"],
 },
     description: { type: String ,
     required:[true,"description is required"],

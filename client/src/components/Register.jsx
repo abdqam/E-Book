@@ -9,15 +9,18 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {grey} from "@material-ui/core/colors";
+
 
 
 const Shadow = {
-    border: "1px solid steelblue",
+    backgroundColor: '#E6E6E6',
+    border: "1px solid #7d2727",
     borderRadius: "5px",
     padding: "10%",
-    boxShadow: "steelblue 0px 4px 20px 0px"
+    boxShadow: "#620000 0px 4px 20px 0px"
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -39,6 +42,17 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(3, 0, 2),
     },
 }));
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: grey[800],
+        },
+        secondary: {
+            main: grey[800],
+        }
+    }
+
+})
 
 const Register = (props) => {
     const [firstName, setFirstName] = useState('');
@@ -73,12 +87,10 @@ const Register = (props) => {
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <div className={classes.paper} style={Shadow}>
-                    <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon />
-                    </Avatar>
                     <Typography component="h1" variant="h5">
                         Sign up
                     </Typography>
+                    <ThemeProvider theme={theme}>
                     <form className={classes.form} noValidate onSubmit={register}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
@@ -151,13 +163,16 @@ const Register = (props) => {
                         </Button>
                         <Grid container justify="flex-end">
                             <Grid item>
-                                <Link href="login" variant="body2"
-                                    >{"Already have an account?"}
+                                <Link href="/login" onClick={props.Registerd(true)} variant="body2"
+                                    >Already have an account?
                                 </Link>
                             </Grid>
                         </Grid>
                     </form>
+                    </ThemeProvider>
                 </div>
+                <Box mt={5}>
+            </Box>
             </Container>
         </div>);
 

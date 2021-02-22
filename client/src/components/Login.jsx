@@ -1,50 +1,23 @@
 import React, { useState } from 'react'
+import {navigate} from '@reach/router'
 import axios from 'axios'
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles,ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
-// const Login = (props) => {
-//     const [email, setEmail] = useState('');
-//     const [password, setPassword] = useState('');
-//     const [errors, setErrors] = useState("");
-//     const login = (e) => {
-//         e.preventDefault();
-//         axios.post('http://localhost:8000/api/login', {
-//             email, password
-//         }, { withCredentials: true })
-//             .then(response => { setErrors(""); props.loggedUser(response.data.user) })
-//             .catch((err) => setErrors("Invalid Login"))
-//     };
-//     return (
-//         <div>
-//             <form onSubmit={login}>
-//                 <small style={{ color: "red" }}>{errors}</small>
-//                 <div><label>Email: <input type="text" onChange={(e) => setEmail(e.target.value)} /></label></div>
-//                 <div><label>Password: <input type="password" onChange={(e) => setPassword(e.target.value)} /></label></div>
-//                 <div><a onClick={(e) => props.Registerd(false)}><span style={{ color: "blue", textDecoration: "underline" }}>You Don't have an account?</span></a></div>
-//                 <Button variant="contained" color="primary">Login</Button>
-//             </form>
-//         </div>
-//     )
-// }
-// export default Login
+import {grey} from "@material-ui/core/colors";
 
 const Shadow = {
+    backgroundColor: '#E6E6E6',
     border: "1px solid steelblue",
     borderRadius: "5px",
     padding: "10%",
-    boxShadow: "steelblue 0px 4px 20px 0px"
+    boxShadow: "#620000 0px 4px 20px 0px"
 }
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -65,6 +38,17 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(3, 0, 2),
     },
 }));
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: grey[800],
+        },
+        secondary: {
+            main: grey[800],
+        }
+    }
+
+})
 
 const Login = (props) => {
     const classes = useStyles();
@@ -76,19 +60,17 @@ const Login = (props) => {
         axios.post('http://localhost:8000/api/login', {
             email, password
         }, { withCredentials: true })
-            .then(response => { setErrors(""); props.loggedUser(response.data.user) })
+            .then(response => { setErrors(""); props.loggedUser(response.data.user);navigate('/') })
             .catch((err) => setErrors("Invalid Login"))
     };
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper} style={Shadow}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar>
                 <Typography component="h1" variant="h5">
                     Sign in
         </Typography>
+        <ThemeProvider theme={theme}>
                 <form className={classes.form} noValidate onSubmit={login}>
                     <TextField
                         variant="outlined"
@@ -128,13 +110,16 @@ const Login = (props) => {
                     </Button>
                     <Grid container>
                         <Grid item>
-                            <Link href="/register" variant="body2" >
-                                {"Don't have an account? Sign Up"}
+                            <Link href="/register" onClick={props.Registerd(false)} variant="body2" >
+                                Don't have an account? Sign Up
                             </Link>
                         </Grid>
                     </Grid>
                 </form>
+                </ThemeProvider>
             </div>
+            <Box mt={5}>
+            </Box>
         </Container>
     );
 }

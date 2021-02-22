@@ -17,8 +17,8 @@ const Root = (props) => {
     return (
         <div>
             <Router>
-                <Login path="/login" loggedUser={loggedUser}/> 
-                <Register path="/register" registerdUser={registerdUser}/>
+                <Login path="/login" Registerd={Registerd} loggedUser={loggedUser}/> 
+                <Register path="/register" Registerd={Registerd} registerdUser={registerdUser}/>
             </Router>
         </div>
     )

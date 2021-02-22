@@ -1,9 +1,9 @@
 const { Book } = require('../models/book.model');
-module.exports.createBook = (request, response) => {
-    Book.create(request.body)
-        .then(book => response.json(book))
-        .catch(err => response.status(400).json(err));
-}
+// module.exports.createBook = (request, response) => {
+//     Book.create(request.body)
+//         .then(book => response.json(book))
+//         .catch(err => response.status(400).json(err));
+// }
 
 module.exports.getAllBooks = (request, response) => {
     Book.find({})
