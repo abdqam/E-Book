@@ -13,7 +13,7 @@ export default props => {
         axios.get('http://localhost:8000/api/books/' + id)
             .then(res => {
                 setName(res.data.name);
-                setImage(res.data.image);
+                setImage(res.file.image);
                 setDescription(res.data.description);
                 setUrl(res.data.url);
         

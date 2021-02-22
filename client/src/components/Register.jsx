@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import Avatar from '@material-ui/core/Avatar';
+import {navigate} from '@reach/router'
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -51,7 +50,6 @@ const theme = createMuiTheme({
             main: grey[800],
         }
     }
-
 })
 
 const Register = (props) => {
@@ -68,7 +66,7 @@ const Register = (props) => {
         axios.post('http://localhost:8000/api/register', {
             firstName, lastName, email, password
         }, { withCredentials: true })
-            .then(response => props.registerdUser(response.data.user))
+            .then(response => {props.registerdUser(response.data.user);navigate('/')})
             .catch(err => {
                 const errorResponse = err.response.data.errors;
                 console.log(err.response.data.errors)

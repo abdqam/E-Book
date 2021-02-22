@@ -5,22 +5,23 @@ import Booklist from './Booklist';
 export default () => {
     const [books, setBooks] = useState([]);
     const [loaded, setLoaded] = useState(false);
-    useEffect(()=>{
+    useEffect(() => {
         axios.get('http://localhost:8000/api/getAllBooks')
-            .then(res=>{
+            .then(res => {
                 setBooks(res.data);
                 setLoaded(true);
             });
-    },[])
+    }, [])
     const removeFromDom = bookId => {
         setBooks(books.filter(book => book._id != bookId));
     }
 
     return (
         <div>
-         <Bookform/>
-           <hr/>
-           {loaded && <Booklist books={books} removeFromDom={removeFromDom}/>}
+            
+            {loaded && <Booklist books={books} removeFromDom={removeFromDom} />}
+            <hr/>
+            <Bookform />
         </div>
     )
 }

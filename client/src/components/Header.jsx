@@ -11,10 +11,10 @@ import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import Root from './Root';
-import logo from '../img/logo.png'
+import logo from '../img/logo.png';
 
-import SideMenu from './SideMenu'
-
+import SideMenu from './SideMenu';
+import Test from './Test'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -55,7 +55,10 @@ export default function MenuAppBar(props) {
                     </Typography>
                     {props.user._id?
                     <Button className={classes.color} onClick={props.logout}>LogOut</Button>:
-                    <Button className={classes.color} onClick={() => navigate('/login')}>Login</Button>}
+                    // <Test/>
+                    <Button className={classes.color} onClick={() => navigate('/login')}>Login</Button>
+                    }
+                    
                 </Toolbar>
             </AppBar>
         </div>

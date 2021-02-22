@@ -24,7 +24,7 @@ module.exports = function(app){
 
     var storage = multer.diskStorage({
         destination: (req, file, callback) => {
-            callback(null, '../client/src/img')
+            callback(null, '../client/public/img')
         },
         filename: (req, file, callback) => {
             callback(null, file.originalname)
@@ -32,12 +32,17 @@ module.exports = function(app){
     });
     var upload = multer({ storage: storage });
     app.post('/api/createNewBook', upload.single('upload'), (request, response, next) => {
+        console.log(request.file.originalname)
+        if(!request.file.originalname){
+            request.file.originalname = 'noImage.png'
+        }
         var obj = {
             name: request.body.name,
             description: request.body.description,
             url:request.body.url,
             image: request.file.originalname,
         }
+        
         Book.create(obj)
         .then(response =>console.log(response.data))
         .catch(err => console.log(err))
