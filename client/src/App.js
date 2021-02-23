@@ -5,6 +5,8 @@ import Header from "./components/Header";
 import Main from './components/Main';
 import Update from './components/Update';
 import Book from './components/Book';
+import Main2 from './components/Main2';
+
 
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -12,14 +14,7 @@ import { Router } from "@reach/router";
 
 function App() {
   const [user, setUser] = useState({ _id: false });
-  const logout = (val) => {
-    axios
-      .get("http://localhost:8000/api/logout", { withCredentials: true })
-      .then(() => {
-        setUser({ _id: false });
-      })
-      .catch((err) => console.log(err));
-  };
+  
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/tokenuser", { withCredentials: true })
@@ -33,15 +28,16 @@ function App() {
   };
   return (
     <div className="App">
-      <Header user={user} logout={logout} />
-      <Root user={user} signedUser={signedUser} />
+      <Header user={user} User={signedUser} />
+      {/* <Root user={user}/> */}
       {user._id?
-            <Router>
+            <Router signedUser={signedUser}>
+              <Main2 path="/index" />
             <Main path="/admin" />
             <Update path="/books/:id/edit" />
             <Book path="/books/:id" />
           </Router>:
-          "hello"
+          ""
       }
       <Footer />
     </div>

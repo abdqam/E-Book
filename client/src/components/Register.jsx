@@ -1,8 +1,14 @@
-import React, { useState } from 'react'
-import axios from 'axios'
-import {navigate} from '@reach/router'
+import React, { useState } from 'react';
+import axios from 'axios';
+import Cookies from 'universal-cookie'
+
+
+import { navigate } from '@reach/router'
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
@@ -10,7 +16,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {grey} from "@material-ui/core/colors";
+import { grey } from "@material-ui/core/colors";
 
 
 
@@ -40,6 +46,12 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    new: {        
+    color:'#545454',
+    fontFamily: 'cursive',
+    fontSize: 'small',
+    fontWeight: '900',
+},
 }));
 const theme = createMuiTheme({
     palette: {
@@ -58,37 +70,56 @@ const Register = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState([]);
-    const [rawError, setRawError] = useState('')
+    const cookies = new Cookies();
+    const [registerd, setRegisterd] = useState(false);
+    const [open, setOpen] = React.useState(false);
 
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const register = (e) => {
         e.preventDefault();
         axios.post('http://localhost:8000/api/register', {
             firstName, lastName, email, password
         }, { withCredentials: true })
-            .then(response => {props.registerdUser(response.data.user);navigate('/')})
-            .catch(err => {
-                const errorResponse = err.response.data.errors;
-                console.log(err.response.data.errors)
-                setRawError(err.response.data.errors)
-                const errorArr = [];
-                for (const key of Object.keys(errorResponse)) {
-                    errorArr.push(errorResponse[key].message)
-                }
-                setErrors(errorArr);
+            .then(response => {
+                cookies.set("user",response.data.user);
+                setErrors("");
+                setOpen(false);
+                props.Registerd(!registerd);
+            })
+            .catch(error => {setErrors("Please fill the empty fields")
+                // console.log(error.response.data.errors)
+                // setOpen(true);
+                // const errorResponse = error.response.data.errors;
+                // // console.log(err.response.data.errors)
+                // // setRawError(error.response.data);
+                // const errorArr = [];
+                // for (const key of Object.keys(errorResponse)) {
+                //     errorArr.push(errorResponse[key].message)
+                // }
+                // setErrors(errorArr);
             })
     };
-    console.log(rawError)
     const classes = useStyles();
     return (
         <div>
-            <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <div className={classes.paper} style={Shadow}>
-                    <Typography component="h1" variant="h5">
-                        Sign up
-                    </Typography>
+            <Button className={classes.new} onClick={handleClickOpen}>
+                Sign up
+        </Button>
                     <ThemeProvider theme={theme}>
+                    <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    className={classes.cont}
+                    aria-labelledby="form-dialog-title"
+                    >
+                        <DialogContent>
                     <form className={classes.form} noValidate onSubmit={register}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
@@ -102,7 +133,6 @@ const Register = (props) => {
                                     label="First Name"
                                     onChange={(e) => setFirstName(e.target.value)}
                                     autoFocus
-                                    error={rawError.firstName}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -115,21 +145,25 @@ const Register = (props) => {
                                     name="lastName"
                                     onChange={(e) => setLastName(e.target.value)}
                                     autoComplete="lname"
-                                    error={rawError.lastName}
                                 />
                             </Grid>
                             <Grid item xs={12}>
+                                {firstName.length?
+                            <div>{(firstName.length)<3 ? <small style={{color:"red"}}>First Name should be atleast 2 char</small>:<small></small>}</div>:""}
+                            {lastName.length?
+                            <div>{(lastName.length)<3 ? <small style={{color:"red"}}>Last Name should be atleast 2 char</small>:<small></small>}</div>:""}
                                 <TextField
                                     variant="outlined"
                                     required
                                     fullWidth
                                     id="email"
                                     label="Email Address"
+                                    type="email"
                                     name="email"
                                     onChange={(e) => setEmail(e.target.value)}
                                     autoComplete="email"
-                                    error={rawError.email}
                                 />
+                                {!(/^([\w-.]+@([\w-]+.)+[\w-]+)?$/.test(email))? <small style={{color:"red"}}>Invalid Email</small>:<small></small>}
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
@@ -142,37 +176,30 @@ const Register = (props) => {
                                     id="password"
                                     onChange={(e) => setPassword(e.target.value)}
                                     autoComplete="current-password"
-                                    error={rawError.password}
                                 />
                             </Grid>
-                            <ul style={{ listStyle: "none", textAlign: "left" }}>{
+                            {password.length?
+                            <div>{(password.length)<8 ? <small style={{color:"red"}}>Password should be atleast 8 char</small>:<small></small>}</div>:""}
+                            {/* <ul style={{ listStyle: "none", textAlign: "left" }}>{
                                 errors.map((err, index) => <><li key={index} style={{ color: "red" }}>{err}</li></>)
-                            }</ul>
+                            }</ul> */}
+                            <small style={{color:"red"}}>{errors}</small>
                         </Grid>
+                        <DialogActions>
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
                             color="primary"
                             className={classes.submit}
-                            onClick={register}
                         >
-                            Sign Up
+                                    Sign Up
                         </Button>
-                        <Grid container justify="flex-end">
-                            <Grid item>
-                                <Link href="/login" onClick={props.Registerd(true)} variant="body2"
-                                    >Already have an account?
-                                </Link>
-                            </Grid>
-                        </Grid>
+                        </DialogActions>
                     </form>
+                    </DialogContent>
+                    </Dialog>
                     </ThemeProvider>
-                </div>
-                <Box mt={5}>
-            </Box>
-            </Container>
-        </div>);
-
+                </div>);
 }
 export default Register

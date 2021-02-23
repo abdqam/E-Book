@@ -1,15 +1,13 @@
 import React, { useState } from 'react'
-import {navigate} from '@reach/router'
+import Cookies from 'universal-cookie'
+
 import axios from 'axios'
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
 import { makeStyles,ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import {grey} from "@material-ui/core/colors";
 
 const Shadow = {
@@ -32,11 +30,16 @@ const useStyles = makeStyles((theme) => ({
     },
     form: {
         width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(1),
+        marginTop: theme.spacing(3),
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    new: {        color:'#545454',
+    fontFamily: 'cursive',
+    fontSize: 'small',
+    fontWeight: '900',
+},
 }));
 const theme = createMuiTheme({
     palette: {
@@ -47,30 +50,50 @@ const theme = createMuiTheme({
             main: grey[800],
         }
     }
-
 })
-
 const Login = (props) => {
     const classes = useStyles();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState("");
+    const [registerd, setRegisterd] = useState(false);
+    const cookies = new Cookies();
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    
+    const handleClose = () => {
+        setOpen(false);
+    };
         const login = (e) => {
         e.preventDefault();
         axios.post('http://localhost:8000/api/login', {
             email, password
         }, { withCredentials: true })
-            .then(response => { setErrors(""); props.loggedUser(response.data.user);navigate('/') })
+            .then(response => {
+                cookies.set("user",response.data.user);
+                setErrors("");
+                setOpen(false);
+                props.Registerd(!registerd);
+            })
             .catch((err) => setErrors("Invalid Login"))
     };
     return (
-        <Container component="main" maxWidth="xs">
-            <CssBaseline />
-            <div className={classes.paper} style={Shadow}>
-                <Typography component="h1" variant="h5">
-                    Sign in
-        </Typography>
-        <ThemeProvider theme={theme}>
+        <div>
+        <Button className={classes.new} onClick={handleClickOpen}>
+                Sign In
+        </Button>
+                    <ThemeProvider theme={theme}>
+                    <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    className={classes.cont}
+                    aria-labelledby="form-dialog-title"
+                    >
+                        <DialogContent>
                 <form className={classes.form} noValidate onSubmit={login}>
                     <TextField
                         variant="outlined"
@@ -99,6 +122,7 @@ const Login = (props) => {
                         error={errors}
                     />
                     <div style={{ color: "red" }}>{errors}</div>
+                    <DialogActions>
                     <Button
                         type="submit"
                         fullWidth
@@ -108,19 +132,11 @@ const Login = (props) => {
                     >
                         Sign In
                     </Button>
-                    <Grid container>
-                        <Grid item>
-                            <Link href="/register" onClick={props.Registerd(false)} variant="body2" >
-                                Don't have an account? Sign Up
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </form>
-                </ThemeProvider>
-            </div>
-            <Box mt={5}>
-            </Box>
-        </Container>
-    );
+                    </DialogActions>
+                    </form>
+                    </DialogContent>
+                    </Dialog>
+                    </ThemeProvider>
+                </div>);
 }
 export default Login

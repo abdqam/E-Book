@@ -23,7 +23,7 @@ module.exports.register = (req, res) => {
         .catch(err => res.status(400).json(err));
 }
 module.exports.login = async (req, res) => {
-    const user = await User.findOne({ email: req.body.email }).populate('books country');
+    const user = await User.findOne({ email: req.body.email });
     if (user === null) {
         return res.sendStatus(400);
     }
@@ -40,9 +40,8 @@ module.exports.login = async (req, res) => {
         })
         .json({ msg: "success!", user: user, token: userToken });
 }
-
-
 module.exports.logout =  (req, res) => {
     res.clearCookie('usertoken');
+    res.clearCookie('user');
     res.sendStatus(200);
 }

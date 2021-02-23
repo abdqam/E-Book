@@ -8,7 +8,6 @@ var multer = require('multer');
 
 module.exports = function(app){
     app.get('/api/getAllBooks', BookController.getAllBooks);
-    app.put('/api/books/:id', BookController.updateBook);
     app.delete('/api/books/:id', BookController.deleteBook);
     app.get('/api/books/:id',BookController.getBook)
 
@@ -44,7 +43,23 @@ module.exports = function(app){
         }
         
         Book.create(obj)
-        .then(response =>console.log(response.data))
+        .then(book =>res.json(book))
         .catch(err => console.log(err))
+    });
+
+    app.put('/api/books/:id', upload.single('upload'), (request, response, next) => {
+        Book.findById(request.params.id)
+        .then(book =>{
+            book.name = request.body.name;
+            book.description = request.body.description;
+            book.url = request.body.url;
+            book.image = request.file.originalname;
+
+            book
+                .save()
+                .then(res =>res.json("Updated"))
+                .catch(err => res.status(400).json(err))
+        })
+        .catch(err => res.status(400).json(err));
     });
 }

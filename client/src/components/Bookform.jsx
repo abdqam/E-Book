@@ -50,7 +50,7 @@ const theme = createMuiTheme({
 
 })
 
-const Bookform = () => {
+const Bookform = (props) => {
   const [name, setName] = useState('');
   const [filename, setFilename] = useState("noImage.png");
   const [description, setDescription] = useState('');
@@ -65,7 +65,7 @@ const Bookform = () => {
     formData.append('description', description);
     formData.append('url', url);
     axios.post('http://localhost:8000/api/createNewBook', formData)
-      .then(res => console.log(res))
+      .then(res => props.bookAdded(res.data))
       .catch(err => {
         const errorResponse = err.response.data.errors; // Get the errors from err.response.data
         const errorArr = []; // Define a temp error array to push the messages in
@@ -100,6 +100,8 @@ const Bookform = () => {
                     onChange={(e) => setName(e.target.value)}
                   />
                 </Grid>
+                {name.length?
+                            <div>{(name.length)<3 ? <small style={{color:"red"}}>Name should be atleast 2 char</small>:<small></small>}</div>:""}
                 <Grid item xs={12} >
                   <TextField
                     id="book description"
@@ -111,6 +113,8 @@ const Bookform = () => {
                     onChange={(e) => setDescription(e.target.value)}
                   />
                 </Grid>
+                {description.length?
+                            <div>{(description.length)<10 ? <small style={{color:"red"}}>Name should be atleast 2 char</small>:<small></small>}</div>:""}
                 <Grid item xs={12}>
                   <TextField
                     id="book URL"
@@ -122,6 +126,8 @@ const Bookform = () => {
                     onChange={(e) => setUrl(e.target.value)}
                   />
                 </Grid>
+                {url.length?
+                            <div>{(url.length)<2 ? <small style={{color:"red"}}>URL is required</small>:<small></small>}</div>:""}
                 <Grid item xs={12}>
                   <TextField
                     id="book image"

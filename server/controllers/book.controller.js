@@ -16,11 +16,11 @@ module.exports.deleteBook = (request, response) => {
         .then(deleteConfirmation => response.json(deleteConfirmation))
         .catch(err => response.json(err))
 }
-module.exports.updateBook = (request, response) => {
-    Book.findOneAndUpdate({_id: request.params.id}, request.body, {new:true})
-        .then(updatedBook => response.json(updatedBook))
-        .catch(err => response.json(err))
-}
+// module.exports.updateBook = (request, response) => {
+//     Book.findOneAndUpdate({_id: request.params.id}, request.body, {new:true})
+//         .then(updatedBook => response.json(updatedBook))
+//         .catch(err => response.json(err))
+// }
 
 module.exports.getBook = (request, response) => {
     Book.findOne({_id:request.params.id})
