@@ -1,7 +1,8 @@
 .App {
   text-align: center;
   /* background-color: #DAC54E; */
-  background: url(https://images.pexels.com/photos/683929/pexels-photo-683929.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940) no-repeat center center fixed;
+  background: url(./img/background.jpg);
+  /* background: url(https://images.pexels.com/photos/683929/pexels-photo-683929.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940) no-repeat center center fixed; */
   
 
 }
