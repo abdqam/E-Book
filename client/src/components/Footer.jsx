@@ -7,7 +7,7 @@ import Link from '@material-ui/core/Link';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary">
+    <Typography variant="body2" color="textSecondary" style={{color:"white"}}>
       {'Copyright © '}
       <Link color="inherit" href="">
       E-Book
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   footer: {
     padding: theme.spacing(3, 2),
     marginTop: 'auto',
-    backgroundColor:'#E6E6E6',
+    backgroundColor:'#0a1c2e',
       boxShadow:'0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)',
   },
   footerClass:{
@@ -49,7 +49,7 @@ export default function Footer() {
       <CssBaseline />
       <footer className={classes.footer}>
         <Container maxWidth="sm">
-          <Typography className={classes.footerClass} variant="body1"> All rights reserved.</Typography>
+          <Typography className={classes.footerClass} variant="body1" style={{color:"white"}}> All rights reserved.</Typography>
           <Copyright />
         </Container>
       </footer>

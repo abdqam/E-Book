@@ -109,7 +109,7 @@ const Register = (props) => {
     const classes = useStyles();
     return (
         <div>
-            <Button className={classes.new} onClick={handleClickOpen}>
+            <Button className={classes.new} onClick={handleClickOpen} style={{color:"white"}}>
                 Sign up
         </Button>
                     <ThemeProvider theme={theme}>

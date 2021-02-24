@@ -83,7 +83,7 @@ const Login = (props) => {
     };
     return (
         <div>
-        <Button className={classes.new} onClick={handleClickOpen}>
+        <Button className={classes.new} onClick={handleClickOpen} style={{color:"white"}}>
                 Sign In
         </Button>
                     <ThemeProvider theme={theme}>

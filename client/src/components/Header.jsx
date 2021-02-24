@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
     },
     headerBackground: {
-        backgroundColor: '#E6E6E6',
+        backgroundColor: '#0a1c2e',
         position: "sticky",
     },
     menuButton: {
@@ -31,8 +31,9 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     logo: {
-        width: '250px',
-        height: '100px'
+        width: '180px',
+        height: '60px',
+        marginTop:"25px"
     },
     color: {
         color: '#545454',
@@ -75,7 +76,7 @@ export default function MenuAppBar(props) {
                     <Typography variant="h6" className={classes.title}>
                         {!cookies.get("user")?
                             <div className={classes.menu}><Register Registerd={Registerd}/><Login Registerd={Registerd}/></div> :
-                            <Button className={classes.color} onClick={logout}>Sign Out</Button>
+                            <Button className={classes.color} onClick={logout} style={{color:"white"}}>Sign Out</Button>
                         }
                     </Typography>
                 </Toolbar>

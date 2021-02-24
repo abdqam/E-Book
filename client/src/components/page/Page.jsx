@@ -43,9 +43,10 @@ return(
     {/* <img src= {image.default}/><br/> */}
     </div>
     <div className="flip-box-back" >
+      
       <h3>{book.name}</h3>
       <h4>{book.description}</h4>
-      <h2><a href={"http://"+book.url}>Download</a></h2>
+      <h2><a href={"http://"+book.url} class="trailer-btn">DownLoad</a></h2>
     </div>
   </div>
 </div>

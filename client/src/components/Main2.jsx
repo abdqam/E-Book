@@ -17,7 +17,7 @@ export default () => {
     }
 
     return (
-        <div style={{ backgroundColor: "#fafafa", }}>
+        <div style={{ backgroundColor: "#DAC54E", }}>
 
 
             {loaded && <Page books={books} />}
