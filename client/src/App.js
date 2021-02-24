@@ -1,11 +1,14 @@
 import "./App.css";
-import Root from "./components/Root";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Main from './components/Main';
 import Update from './components/Update';
 import Book from './components/Book';
-import Main2 from './components/Main2';
+import Home from './components/Home';
+import Category from './components/Category';
+import ContactUs from './components/AboutUs/ContactUs.jsx';
+
+
 
 
 import axios from "axios";
@@ -14,7 +17,7 @@ import { Router } from "@reach/router";
 
 function App() {
   const [user, setUser] = useState({ _id: false });
-  
+
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/tokenuser", { withCredentials: true })
@@ -28,18 +31,27 @@ function App() {
   };
   return (
     <div className="App">
+      <div className="Background">
       <Header user={user} User={signedUser} />
-      {/* <Root user={user}/> */}
-      {user._id?
-            <Router signedUser={signedUser}>
-              <Main2 path="/index" />
-            <Main path="/admin" />
+      {
+        user.role === 1 ?
+          <Router >
+            <ContactUs path="/about-us"/>
+            <Home path="/" />
+            <Category path="/category/:name" />
+            <Main path="/admin"/>
             <Update path="/books/:id/edit" />
             <Book path="/books/:id" />
-          </Router>:
-          ""
+          </Router> :
+          <Router >
+            <Home path="/" />
+            <ContactUs path="/about-us"/>
+            <Category path="/category/:name" />
+            <Book path="/books/:id" />
+          </Router>
       }
       <Footer />
+      </div>
     </div>
   );
 }

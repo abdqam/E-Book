@@ -24,10 +24,10 @@ export default () => {
 
     return (
         <div>
-            
-            {loaded && <Booklist books={books} removeFromDom={removeFromDom}/>}
-            <hr/>
             <Bookform bookAdded={bookAdded} />
+            <hr/>
+            {loaded && <Booklist books={books} removeFromDom={removeFromDom}/>}
+            
         </div>
     )
 }

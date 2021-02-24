@@ -12,14 +12,8 @@ export default () => {
                 setLoaded(true);
             });
     }, [])
-    const removeFromDom = bookId => {
-        setBooks(books.filter(book => book._id != bookId));
-    }
-
     return (
-        <div style={{ backgroundColor: "#DAC54E", }}>
-
-
+        <div>
             {loaded && <Page books={books} />}
         </div>
     )

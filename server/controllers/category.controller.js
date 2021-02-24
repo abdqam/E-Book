@@ -12,7 +12,7 @@ module.exports.getAllCategories = (request, response) => {
 }
 
 module.exports.getCategoryBooks = (request, response) => {
-    Category.findOne({_id:request.params.id}).populate('books')
+    Category.findOne({name:request.params.name}).populate('books')
         .then(category => response.json(category))
         .catch(err => response.json(err))
 }

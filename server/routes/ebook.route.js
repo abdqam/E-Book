@@ -29,6 +29,6 @@ module.exports = function(app){
 
     app.get('/api/getAllCategories', CategoryController.getAllCategories);
     app.post('/api/createNewCategory', CategoryController.createCategory);
-    app.get('/api/catbooks/:id', CategoryController.getCategoryBooks);
+    app.get('/api/catbooks/:name', CategoryController.getCategoryBooks);
 
 }
