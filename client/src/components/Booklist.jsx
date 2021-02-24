@@ -34,6 +34,14 @@ const useStyles = makeStyles({
     table: {
         minWidth: 700,
     },
+    center: {
+        overflow:'auto',
+        textAlign: 'center',
+        width: '50%',
+        marginLeft: '25%',
+        marginTop: '1%',
+        height:'300px'
+    }
 });
 export default props => {
 
@@ -46,31 +54,33 @@ export default props => {
     }
     const classes = useStyles();
     return (
-        <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="customized table">
-                <TableHead>
-                    <TableRow>
-                        <StyledTableCell>Book Name</StyledTableCell>
-                        <StyledTableCell align="right">Book Description</StyledTableCell>
-                        <StyledTableCell align="right">Display</StyledTableCell>
-                        <StyledTableCell align="right">Edit</StyledTableCell>
-                        <StyledTableCell align="right">Delete</StyledTableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {props.books.map((book, index) => (
-                        <StyledTableRow key={index}>
-                            <StyledTableCell component="th" scope="row">
-                                {book.name}
-                            </StyledTableCell>
-                            <StyledTableCell align="right">{book.description}</StyledTableCell>
-                            <StyledTableCell align="right"><IconButton onClick={() => navigate(`/books/${book._id}`)}><Description/></IconButton></StyledTableCell>
-                            <StyledTableCell align="right"><IconButton onClick={() => navigate(`/books/${book._id}/edit`)}><EditIcon/></IconButton></StyledTableCell>
-                            <StyledTableCell align="right"><IconButton onClick={() => deleteBook(book._id)} aria-label="delete" color="danger"><DeleteIcon/></IconButton></StyledTableCell>
-                        </StyledTableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+        <div className={classes.center}>
+            <TableContainer component={Paper}>
+                <Table className={classes.table} aria-label="customized table">
+                    <TableHead>
+                        <TableRow>
+                            <StyledTableCell>Book ID</StyledTableCell>
+                            <StyledTableCell>Book Name</StyledTableCell>
+                            <StyledTableCell align="right">Book Description</StyledTableCell>
+                            <StyledTableCell align="right">Display</StyledTableCell>
+                            <StyledTableCell align="right">Edit</StyledTableCell>
+                            <StyledTableCell align="right">Delete</StyledTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {props.books.map((book, index) => (
+                            <StyledTableRow key={index}>
+                                <StyledTableCell component="th" scope="row">{index+1}</StyledTableCell>
+                                <StyledTableCell component="th" scope="row">{book.name}</StyledTableCell>
+                                <StyledTableCell align="right">{book.description}</StyledTableCell>
+                                <StyledTableCell align="right"><IconButton onClick={() => navigate(`/books/${book._id}`)}><Description /></IconButton></StyledTableCell>
+                                <StyledTableCell align="right"><IconButton onClick={() => navigate(`/books/${book._id}/edit`)}><EditIcon /></IconButton></StyledTableCell>
+                                <StyledTableCell align="right"><IconButton onClick={() => deleteBook(book._id)} aria-label="delete" color="danger"><DeleteIcon /></IconButton></StyledTableCell>
+                            </StyledTableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </div>
     )
 }

@@ -52,7 +52,7 @@ const theme = createMuiTheme({
 export default props => {
     const { id } = props;
     const [name, setName] = useState('');
-    const [filename, setFilename] = useState("noImage.png");
+    const [filename, setFilename] = useState("");
     const [description, setDescription] = useState('');
     const [url, setUrl] = useState('');
     const [errors, setErrors] = useState([]);
@@ -87,7 +87,7 @@ export default props => {
                         Update Book
                     </Typography>
                     <ThemeProvider theme={theme}>
-                        <form className={classes.form} noValidate onSubmit={updateBook}>
+                        <form className={classes.form} noValidate onSubmit={updateBook} encType="multipart/form-data">
                             <Grid container spacing={2} >
                                 <Grid item xs={12} >
                                     <TextField

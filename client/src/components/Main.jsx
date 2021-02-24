@@ -13,13 +13,12 @@ export default () => {
                 setBooks(res.data);
                 setLoaded(true);
             });
-    }, [])
+    }, [book])
     const removeFromDom = bookId => {
         setBooks(books.filter(book => book._id != bookId));
     }
     const bookAdded = (val) =>{
         setBook(val)
-        setBooks(() =>[...books,val])
     }
 
 

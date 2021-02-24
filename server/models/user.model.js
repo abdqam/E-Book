@@ -20,6 +20,10 @@ const UserSchema = new mongoose.Schema(
                 message: "Please enter a valid email",
             },
         },
+        role: {
+            type:Number,
+            default:0
+        },
 
         password: {
             type: String,

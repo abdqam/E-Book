@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Category = require('../models/category.model')
 const BookSchema = new mongoose.Schema({
     name: {
         type: String ,

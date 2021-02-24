@@ -1,16 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios'
 
-import {navigate} from '@reach/router'
+
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {grey} from "@material-ui/core/colors";
+import { grey } from "@material-ui/core/colors";
 
 const Shadow = {
   backgroundColor: '#E6E6E6',
@@ -21,31 +26,35 @@ const Shadow = {
 }
 const useStyles = makeStyles((theme) => ({
   paper: {
-      marginTop: theme.spacing(8),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main,
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
-      width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(3),
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
   },
   submit: {
-      margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(3, 0, 2),
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 220,
   },
 }));
 const theme = createMuiTheme({
   palette: {
-      primary: {
-          main: grey[800],
-      },
-      secondary: {
-          main: grey[800],
-      }
+    primary: {
+      main: grey[800],
+    },
+    secondary: {
+      main: grey[800],
+    }
   },
 
 })
@@ -56,6 +65,14 @@ const Bookform = (props) => {
   const [description, setDescription] = useState('');
   const [url, setUrl] = useState('');
   const [errors, setErrors] = useState([]);
+  const [category, setCategory] = useState('English');
+  const [allCategories, setAllCategories] = useState('English');
+  const [loaded,setLoaded] = useState(false);
+
+useEffect(() => {
+axios.get('http://localhost:8000/api/getAllCategories')
+.then(res=>{setAllCategories(res.data);setLoaded(true);})
+},[])
 
   const submitData = (e) => {
     e.preventDefault();
@@ -64,6 +81,7 @@ const Bookform = (props) => {
     formData.append('name', name);
     formData.append('description', description);
     formData.append('url', url);
+    formData.append('category', category);
     axios.post('http://localhost:8000/api/createNewBook', formData)
       .then(res => props.bookAdded(res.data))
       .catch(err => {
@@ -87,7 +105,7 @@ const Bookform = (props) => {
             Add Book
                     </Typography>
           <ThemeProvider theme={theme}>
-            <form className={classes.form} noValidate onSubmit={submitData}>
+            <form className={classes.form} noValidate onSubmit={submitData} encType="multipart/form-data">
               <Grid container spacing={2} >
                 <Grid item xs={12} >
                   <TextField
@@ -100,8 +118,8 @@ const Bookform = (props) => {
                     onChange={(e) => setName(e.target.value)}
                   />
                 </Grid>
-                {name.length?
-                            <div>{(name.length)<3 ? <small style={{color:"red"}}>Name should be atleast 2 char</small>:<small></small>}</div>:""}
+                {name.length ?
+                  <div>{(name.length) < 3 ? <small style={{ color: "red" }}>Name should be atleast 2 char</small> : <small></small>}</div> : ""}
                 <Grid item xs={12} >
                   <TextField
                     id="book description"
@@ -113,8 +131,8 @@ const Bookform = (props) => {
                     onChange={(e) => setDescription(e.target.value)}
                   />
                 </Grid>
-                {description.length?
-                            <div>{(description.length)<10 ? <small style={{color:"red"}}>Name should be atleast 2 char</small>:<small></small>}</div>:""}
+                {description.length ?
+                  <div>{(description.length) < 10 ? <small style={{ color: "red" }}>Name should be atleast 2 char</small> : <small></small>}</div> : ""}
                 <Grid item xs={12}>
                   <TextField
                     id="book URL"
@@ -126,8 +144,16 @@ const Bookform = (props) => {
                     onChange={(e) => setUrl(e.target.value)}
                   />
                 </Grid>
-                {url.length?
-                            <div>{(url.length)<2 ? <small style={{color:"red"}}>URL is required</small>:<small></small>}</div>:""}
+                {url.length ?
+                  <div>{(url.length) < 2 ? <small style={{ color: "red" }}>URL is required</small> : <small></small>}</div> : ""}
+                <Grid item xs={12}>
+                <FormControl className={classes.formControl}>
+                  <InputLabel htmlFor="Category-select">Category</InputLabel>
+                  <Select defaultValue="" id="Category-select" onChange={(e) => setCategory(e.target.value)}>
+                    {loaded && allCategories.map((cat,index) =><MenuItem key={index} value={cat.name}>{cat.name}</MenuItem>)}
+                  </Select>
+                  </FormControl>
+                </Grid>
                 <Grid item xs={12}>
                   <TextField
                     id="book image"

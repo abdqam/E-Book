@@ -6,16 +6,9 @@ module.exports.createCategory = (request, response) => {
 }
 
 module.exports.getAllCategories = (request, response) => {
-    Category.find({})
+    Category.find({}).populate('books')
         .then(categories => response.json(categories))
         .catch(err => response.json({message:"something went wrong",error:err}))
-}
-
-module.exports.updateCategory = (request, response) => {
-    const {id} =request.body;
-    Category.findOneAndUpdate({_id: request.params.id},{$addToSet:{books:id}}, {new:true})
-        .then(updatedcategory => response.json(updatedcategory))
-        .catch(err => response.json(err))
 }
 
 module.exports.getCategoryBooks = (request, response) => {
@@ -23,6 +16,3 @@ module.exports.getCategoryBooks = (request, response) => {
         .then(category => response.json(category))
         .catch(err => response.json(err))
 }
-
-
-
