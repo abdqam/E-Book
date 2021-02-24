@@ -37,10 +37,11 @@ const useStyles = makeStyles({
     center: {
         overflow:'auto',
         textAlign: 'center',
-        width: '50%',
-        marginLeft: '25%',
-        marginTop: '1%',
-        height:'300px'
+        width: '70%',
+        // marginLeft: '25%',
+        marginTop: '2%',
+        height:'300px',
+        margin:'0 auto'
     }
 });
 export default props => {

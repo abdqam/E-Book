@@ -18,14 +18,15 @@ import Container from '@material-ui/core/Container';
 import { grey } from "@material-ui/core/colors";
 
 const Shadow = {
-  backgroundColor: '#E6E6E6',
-  border: "1px solid #7d2727",
+  backgroundColor: '#fff',
+  // border: "1px solid #7d2727",
   borderRadius: "5px",
   padding: "10%",
-  boxShadow: "#620000 0px 4px 20px 0px"
+  // boxShadow: "#fff 0px 4px 20px 0px"
 }
 const useStyles = makeStyles((theme) => ({
   paper: {
+ 
     marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
@@ -97,7 +98,7 @@ axios.get('http://localhost:8000/api/getAllCategories')
   }
   const classes = useStyles();
   return (
-    <div>
+    <div >
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper} style={Shadow}>
