@@ -226,7 +226,7 @@ const ContactUs = () => {
             </div>
 
 
-            <section class="Material-contact-section section-padding section-dark">
+            {/* <section class="Material-contact-section section-padding section-dark">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 wow animated fadeInLeft" data-wow-delay=".2s">
@@ -256,8 +256,8 @@ const ContactUs = () => {
                         </div>
                     </div>
                 </div>
-            </section >
-            <div class="bottom section-padding">
+            </section > */}
+            {/* <div class="bottom section-padding">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 text-center">
@@ -267,7 +267,7 @@ const ContactUs = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div >
     )
 }

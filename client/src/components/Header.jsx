@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 'small',
         fontWeight: '900',
         float: 'right',
-        marginLeft: '135px',
+        marginLeft: '65px',
     },
     home: {
         color: 'white',

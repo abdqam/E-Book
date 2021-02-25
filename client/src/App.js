@@ -7,7 +7,7 @@ import Book from './components/Book';
 import Home from './components/Home';
 import Category from './components/Category';
 import ContactUs from './components/AboutUs/ContactUs.jsx';
-
+import Chat from './components/Chat'
 
 
 
@@ -42,12 +42,14 @@ function App() {
             <Main path="/admin"/>
             <Update path="/books/:id/edit" />
             <Book path="/books/:id" />
+             <Chat path="/chat"/>
           </Router> :
           <Router >
             <Home path="/" />
             <ContactUs path="/about-us"/>
             <Category path="/category/:name" />
             <Book path="/books/:id" />
+            <Chat path="/chat"/>
           </Router>
       }
       <Footer />
