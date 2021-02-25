@@ -82,7 +82,7 @@ export default function MenuAppBar(props) {
     useEffect(() => {
         axios.get('http://localhost:8000/api/getAllCategories')
             .then(res => setCats(res.data))
-    }, [])
+    }, [cats.length])
     const logout = (e) => {
         e.preventDefault()
         axios

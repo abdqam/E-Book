@@ -73,7 +73,7 @@ const Bookform = (props) => {
 useEffect(() => {
 axios.get('http://localhost:8000/api/getAllCategories')
 .then(res=>{setAllCategories(res.data);setLoaded(true);})
-},[])
+},[props.Added])
 
   const submitData = (e) => {
     e.preventDefault();

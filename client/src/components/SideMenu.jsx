@@ -100,20 +100,20 @@ export default function SwipeableTemporaryDrawer() {
     );
 
     return (
-        <div>
-            {['left'].map((anchor) => (
-                <React.Fragment key={anchor}>
-                    <Button onClick={toggleDrawer(anchor, true)} className={classes.color}><MenuIcon /></Button>
-                    <SwipeableDrawer
-                        anchor={anchor}
-                        open={state[anchor]}
-                        onClose={toggleDrawer(anchor, false)}
-                        onOpen={toggleDrawer(anchor, true)}
-                    >
-                        {list(anchor)}
-                    </SwipeableDrawer>
-                </React.Fragment>
-            ))}
-        </div>
+        // <div>
+        //     {['left'].map((anchor) => (
+        //         <React.Fragment key={anchor}>
+        //             <Button onClick={toggleDrawer(anchor, true)} className={classes.color}><MenuIcon /></Button>
+        //             <SwipeableDrawer
+        //                 anchor={anchor}
+        //                 open={state[anchor]}
+        //                 onClose={toggleDrawer(anchor, false)}
+        //                 onOpen={toggleDrawer(anchor, true)}
+        //             >
+        //                 {list(anchor)}
+        //             </SwipeableDrawer>
+        //         </React.Fragment>
+        //     ))}
+        // </div>
     );
 }
